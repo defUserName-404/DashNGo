@@ -1,3 +1,4 @@
+import 'package:dash_n_go/ui/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Scaffold(),
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

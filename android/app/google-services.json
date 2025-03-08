@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "156941439651",
+    "firebase_url": "https://dashngo-u34rfg-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "dashngo-u34rfg",
+    "storage_bucket": "dashngo-u34rfg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156941439651:android:a31000f7a5d3f66af86516",
+        "android_client_info": {
+          "package_name": "com.defusername.dash_n_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChm5PdpG7oCCRq5OHaNrRfRPmVT5xSNhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
