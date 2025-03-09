@@ -1,7 +1,7 @@
-import '../../models/auth_user.dart';
+import '../../models/auth/auth_user.dart';
 
 abstract class AuthService {
-  AppAuthUser get currentUser;
+  AppAuthUser? get currentUser;
 
   Future<void> initialize();
 

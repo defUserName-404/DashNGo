@@ -1,4 +1,4 @@
-import 'package:dash_n_go/ui/theme/colors.dart';
+import 'package:dash_n_go/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -68,42 +68,21 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 20),
               TextField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
+                decoration: InputDecoration(labelText: 'Email'),
               ),
               SizedBox(height: 20),
               TextField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
+                decoration: InputDecoration(labelText: 'Password'),
                 obscureText: true,
               ),
               SizedBox(height: 40),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    elevation: 0,
-                    backgroundColor: AppColors.colorPrimary,
-                    foregroundColor: AppColors.colorAccent1,
-                  ),
-                  onPressed: () {},
-                  icon: Text('LOG IN'),
-                  label: Icon(
-                    Icons.chevron_right,
-                    color: AppColors.colorAccent1,
-                  ),
+              AppButton(
+                label: Text(
+                  'LOG IN',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {},
               ),
               SizedBox(height: 20),
               Row(
@@ -114,7 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/signup');
                     },
-                    child: Text('SIGN UP'),
+                    child: Text(
+                      'SIGN UP',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Text('instead'),
                 ],

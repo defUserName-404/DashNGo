@@ -65,10 +65,10 @@ flutter:
   assets:
     - assets/images/
 
-fonts:
-  - family: Brand-Bold
-    fonts:
-      asset: assets/fonts/bolt-semibold.ttf
-  - family: Brand-Regular
-    fonts:
-      asset: assets/fonts/bolt-regular.ttf
+  fonts:
+    - family: Brand-Bold
+      fonts:
+        - asset: assets/fonts/bolt-semibold.ttf
+    - family: Brand-Regular
+      fonts:
+        - asset: assets/fonts/bolt-regular.ttf
