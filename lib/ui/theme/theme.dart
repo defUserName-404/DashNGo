@@ -39,6 +39,10 @@ class AppTheme {
         borderRadius: BorderRadius.circular(4.0),
         borderSide: const BorderSide(color: AppColors.colorPrimary, width: 2.0),
       ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: const BorderSide(color: AppColors.colorPink, width: 2.0),
+      ),
     ),
   );
 
@@ -81,6 +85,10 @@ class AppTheme {
           color: AppColors.colorPrimaryDark,
           width: 2.0,
         ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: const BorderSide(color: AppColors.colorPink, width: 2.0),
       ),
     ),
   );
