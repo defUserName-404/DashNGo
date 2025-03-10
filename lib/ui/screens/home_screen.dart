@@ -34,38 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Firebase Realtime DB",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return ListTile(title: Text(messages[index]));
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(labelText: "Enter message"),
-                  ),
-                ),
-                IconButton(icon: Icon(Icons.send), onPressed: _sendMessage),
-              ],
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text("Firebase Realtime DB")),
+      body: Column(children: []),
     );
   }
 }

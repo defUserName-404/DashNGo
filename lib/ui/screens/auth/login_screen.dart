@@ -1,5 +1,5 @@
+import 'package:dash_n_go/services/auth/auth_validator.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
-import 'package:dash_n_go/util/validator.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: 'Email'),
-                  validator: Validator.validateEmail,
+                  validator: AuthValidator.validateEmail,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
-                  validator: Validator.validatePassword,
+                  validator: AuthValidator.validatePassword,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 40),

@@ -1,13 +1,18 @@
-import '../../models/auth/auth_user.dart';
+import 'auth_user.dart';
 
 abstract class AuthService {
-  AppAuthUser? get currentUser;
+  AuthUser? get currentUser;
 
   Future<void> initialize();
 
-  Future<void> signIn({required String email, required String password});
+  Future<AuthUser> signIn({required String email, required String password});
 
   Future<void> signOut();
 
-  Future<bool> register({required String email, required String password});
+  Future<AuthUser> register({
+    required String email,
+    required String password,
+    required String fullName,
+    required String phoneNumber,
+  });
 }

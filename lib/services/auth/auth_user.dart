@@ -2,21 +2,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class AppAuthUser {
+class AuthUser {
   final String id;
   final String fullName;
   final String email;
   final String phoneNumber;
 
-  const AppAuthUser({
+  const AuthUser({
     required this.id,
     required this.fullName,
     required this.email,
     required this.phoneNumber,
   });
 
-  factory AppAuthUser.fromFirebase(User user) {
-    return AppAuthUser(
+  factory AuthUser.fromFirebase(User user) {
+    return AuthUser(
       id: user.uid,
       fullName: user.displayName!,
       email: user.email!,

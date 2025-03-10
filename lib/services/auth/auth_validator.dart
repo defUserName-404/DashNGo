@@ -1,5 +1,5 @@
-class Validator {
-  Validator._();
+class AuthValidator {
+  AuthValidator._();
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {

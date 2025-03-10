@@ -1,5 +1,5 @@
+import 'package:dash_n_go/services/auth/auth_validator.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
-import 'package:dash_n_go/util/validator.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -73,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(labelText: 'Full Name'),
-                  validator: Validator.validateName,
+                  validator: AuthValidator.validateName,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -81,7 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: 'Email'),
-                  validator: Validator.validateEmail,
+                  validator: AuthValidator.validateEmail,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -89,7 +89,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(labelText: 'Phone Number'),
-                  validator: Validator.validatePhone,
+                  validator: AuthValidator.validatePhone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -97,7 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: _passwordController,
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
-                  validator: Validator.validatePassword,
+                  validator: AuthValidator.validatePassword,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 40),
@@ -107,7 +107,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   icon: Icon(Icons.chevron_right),
-                  onPressed: () {},
+                  onPressed: () async {
+                    // if (!_formKey.currentState!.validate()) return;
+                    // await FirebaseAuthService().register(
+                    //   email: _emailController.text,
+                    //   password: _passwordController.text,
+                    //   fullName: _nameController.text,
+                    //   phoneNumber: _phoneNumberController.text,
+                    // );
+                    Navigator.pushReplacementNamed(context, '/home');
+                  },
                 ),
                 SizedBox(height: 20),
                 Row(
