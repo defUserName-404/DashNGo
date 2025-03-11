@@ -1,30 +1,12 @@
-import 'package:dash_n_go/firebase_options.dart';
 import 'package:dash_n_go/services/auth/auth_service.dart';
 import 'package:dash_n_go/services/auth/auth_user.dart';
 import 'package:dash_n_go/services/db/realtime_db.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
-import 'package:firebase_core/firebase_core.dart';
 
 import 'auth_exceptions.dart';
 
 class FirebaseAuthService implements AuthService {
-  @override
-  AuthUser? get currentUser {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return AuthUser.fromFirebase(user);
-    }
-    return null;
-  }
-
-  @override
-  Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
   @override
   Future<AuthUser> register({
     required String email,
@@ -33,12 +15,11 @@ class FirebaseAuthService implements AuthService {
     required String phoneNumber,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final user = currentUser;
-      if (user != null) {
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      final firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        final user = AuthUser.fromFirebase(firebaseUser);
         await RealtimeDatabaseService.instance.saveUserData(user);
         return user;
       } else {
@@ -65,12 +46,11 @@ class FirebaseAuthService implements AuthService {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final user = currentUser;
-      if (user != null) {
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      final firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        final user = AuthUser.fromFirebase(firebaseUser);
         return user;
       } else {
         throw UserNotLoggedInAuthException();

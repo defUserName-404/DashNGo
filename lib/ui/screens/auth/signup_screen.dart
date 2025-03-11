@@ -2,6 +2,9 @@ import 'package:dash_n_go/services/auth/auth_validator.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../services/auth/auth_exceptions.dart';
+import '../../../services/auth/firebase_auth_service.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -106,16 +109,54 @@ class _SignupScreenState extends State<SignupScreen> {
                     'SIGN UP',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  icon: Icon(Icons.chevron_right),
+                  icon: Icon(Icons.person_add),
                   onPressed: () async {
-                    // if (!_formKey.currentState!.validate()) return;
-                    // await FirebaseAuthService().register(
-                    //   email: _emailController.text,
-                    //   password: _passwordController.text,
-                    //   fullName: _nameController.text,
-                    //   phoneNumber: _phoneNumberController.text,
-                    // );
-                    Navigator.pushReplacementNamed(context, '/home');
+                    if (!_formKey.currentState!.validate()) return;
+                    try {
+                      await FirebaseAuthService().register(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        fullName: _nameController.text,
+                        phoneNumber: _phoneNumberController.text,
+                      );
+                      if (context.mounted) {
+                        Navigator.popAndPushNamed(context, '/home');
+                      }
+                    } on WeakPasswordAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Password is too weak. Use at least 6 characters.',
+                          ),
+                        ),
+                      );
+                    } on EmailAlreadyExistsException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Email already registered. Try logging in.',
+                          ),
+                        ),
+                      );
+                    } on InvalidEmailAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Invalid email format.')),
+                      );
+                    } on GenericAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Registration failed. Please try again.',
+                          ),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('An unexpected error occurred.'),
+                        ),
+                      );
+                    }
                   },
                 ),
                 SizedBox(height: 20),

@@ -1,6 +1,6 @@
 import 'package:dash_n_go/services/auth/auth_user.dart';
 import 'package:firebase_database/firebase_database.dart'
-    show DatabaseReference, FirebaseDatabase;
+    show DatabaseReference, FirebaseDatabase, ServerValue;
 
 class RealtimeDatabaseService {
   static final RealtimeDatabaseService _shared =
@@ -10,16 +10,14 @@ class RealtimeDatabaseService {
 
   RealtimeDatabaseService._sharedInstance();
 
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+
   Future<void> saveUserData(AuthUser user) async {
-    final DatabaseReference userRef = FirebaseDatabase.instance
-        .ref()
-        .child("users")
-        .child(user.id);
-    await userRef.set({
-      "fullName": user.fullName,
-      "phoneNumber": user.phoneNumber,
-      "email": user.email,
-      "uid": user.id,
+    await _database.child('users').child(user.id).set({
+      'email': user.email,
+      'fullName': user.fullName,
+      'phoneNumber': user.phoneNumber,
+      'createdAt': ServerValue.timestamp,
     });
   }
 }

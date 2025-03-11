@@ -1,6 +1,9 @@
 import 'package:dash_n_go/services/auth/auth_validator.dart';
+import 'package:dash_n_go/services/auth/firebase_auth_service.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../../services/auth/auth_exceptions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late final _formKey = GlobalKey<FormState>();
   late final TextEditingController _emailController, _passwordController;
 
   @override
@@ -38,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             right: 20,
           ),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Center(
@@ -83,7 +88,46 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   icon: Icon(Icons.chevron_right),
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) return;
+                    try {
+                      await FirebaseAuthService().signIn(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                      if (context.mounted) {
+                        Navigator.popAndPushNamed(context, '/home');
+                      }
+                    } on UserNotFoundAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('User not found. Please register.'),
+                        ),
+                      );
+                    } on WrongPasswordAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Incorrect password. Please try again.',
+                          ),
+                        ),
+                      );
+                    } on GenericAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Authentication failed. Please try again.',
+                          ),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('An unexpected error occurred.'),
+                        ),
+                      );
+                    }
+                  },
                 ),
                 SizedBox(height: 20),
                 Row(
