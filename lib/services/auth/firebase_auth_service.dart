@@ -1,6 +1,6 @@
 import 'package:dash_n_go/services/auth/auth_service.dart';
 import 'package:dash_n_go/services/auth/auth_user.dart';
-import 'package:dash_n_go/services/db/realtime_db.dart';
+import 'package:dash_n_go/services/database/realtime_db.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
 
