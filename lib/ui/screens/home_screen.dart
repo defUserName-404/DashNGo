@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dash_n_go/ui/screens/search_screen.dart';
 import 'package:dash_n_go/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -178,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
         enableDrag: false,
         builder:
             (context) => SizedBox(
-              height: 220,
+              height: 230,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -196,45 +197,55 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 5),
-                    Container(
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color:
-                              isDark
-                                  ? AppColors.colorPrimaryDark
-                                  : AppColors.colorPrimary,
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5.0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchScreen(),
                           ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.search,
-                              color:
-                                  isDark
-                                      ? AppColors.colorPrimaryDark
-                                      : AppColors.colorPrimary,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text(
-                              'Search Destination',
-                              style: TextStyle(
-                                color: AppColors.colorTextSemiLight,
-                              ),
+                        );
+                      },
+                      child: Container(
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color:
+                                isDarkMode
+                                    ? AppColors.colorPrimaryDark
+                                    : AppColors.colorPrimary,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 5.0,
+                              spreadRadius: 0.5,
+                              offset: Offset(0.7, 0.7),
                             ),
                           ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color:
+                                    isDarkMode
+                                        ? AppColors.colorPrimaryDark
+                                        : AppColors.colorPrimary,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text(
+                                'Search Destination',
+                                style: TextStyle(
+                                  color: AppColors.colorTextSemiLight,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
