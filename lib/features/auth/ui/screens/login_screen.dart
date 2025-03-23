@@ -1,38 +1,31 @@
-import 'package:dash_n_go/services/auth/auth_validator.dart';
+import 'package:dash_n_go/features/auth/services/firebase_auth_service.dart';
+import 'package:dash_n_go/features/auth/util/auth_validator.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../services/auth/auth_exceptions.dart';
-import '../../../services/auth/firebase_auth_service.dart';
+import '../../exceptions/auth_exceptions.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   late final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _nameController,
-      _emailController,
-      _phoneNumberController,
-      _passwordController;
+  late final TextEditingController _emailController, _passwordController;
 
   @override
   void initState() {
-    _nameController = TextEditingController();
     _emailController = TextEditingController();
-    _phoneNumberController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
-    _phoneNumberController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -66,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Create a Rider\'s Account',
+                  'Sign In as a Rider',
                   style: TextStyle(
                     fontSize:
                         Theme.of(context).textTheme.headlineMedium!.fontSize,
@@ -74,25 +67,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: 'Full Name'),
-                  validator: AuthValidator.validateName,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                ),
-                SizedBox(height: 20),
-                TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: 'Email'),
                   validator: AuthValidator.validateEmail,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _phoneNumberController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
-                  validator: AuthValidator.validatePhone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -106,47 +84,39 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: 40),
                 AppButton(
                   label: Text(
-                    'SIGN UP',
+                    'LOG IN',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  icon: Icon(Icons.person_add),
+                  icon: Icon(Icons.chevron_right),
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) return;
                     try {
-                      await FirebaseAuthService().register(
+                      await FirebaseAuthService().signIn(
                         email: _emailController.text,
                         password: _passwordController.text,
-                        fullName: _nameController.text,
-                        phoneNumber: _phoneNumberController.text,
                       );
                       if (context.mounted) {
                         Navigator.popAndPushNamed(context, '/home');
                       }
-                    } on WeakPasswordAuthException {
+                    } on UserNotFoundAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('User not found. Please register.'),
+                        ),
+                      );
+                    } on WrongPasswordAuthException {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Password is too weak. Use at least 6 characters.',
+                            'Incorrect password. Please try again.',
                           ),
                         ),
-                      );
-                    } on EmailAlreadyExistsException {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Email already registered. Try logging in.',
-                          ),
-                        ),
-                      );
-                    } on InvalidEmailAuthException {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Invalid email format.')),
                       );
                     } on GenericAuthException {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Registration failed. Please try again.',
+                            'Authentication failed. Please try again.',
                           ),
                         ),
                       );
@@ -163,13 +133,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Already have an account?'),
+                    Text('Don\'t have an account?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, '/signup');
                       },
                       child: Text(
-                        'LOG IN',
+                        'SIGN UP',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

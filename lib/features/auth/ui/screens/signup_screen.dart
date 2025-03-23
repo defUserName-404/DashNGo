@@ -1,31 +1,38 @@
-import 'package:dash_n_go/services/auth/auth_validator.dart';
-import 'package:dash_n_go/services/auth/firebase_auth_service.dart';
+import 'package:dash_n_go/features/auth/util/auth_validator.dart';
 import 'package:dash_n_go/ui/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../services/auth/auth_exceptions.dart';
+import '../../exceptions/auth_exceptions.dart';
+import '../../services/firebase_auth_service.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   late final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _emailController, _passwordController;
+  late final TextEditingController _nameController,
+      _emailController,
+      _phoneNumberController,
+      _passwordController;
 
   @override
   void initState() {
+    _nameController = TextEditingController();
     _emailController = TextEditingController();
+    _phoneNumberController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
+    _phoneNumberController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -59,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Sign In as a Rider',
+                  'Create a Rider\'s Account',
                   style: TextStyle(
                     fontSize:
                         Theme.of(context).textTheme.headlineMedium!.fontSize,
@@ -67,10 +74,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(labelText: 'Full Name'),
+                  validator: AuthValidator.validateName,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
+                SizedBox(height: 20),
+                TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: 'Email'),
                   validator: AuthValidator.validateEmail,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  validator: AuthValidator.validatePhone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 SizedBox(height: 20),
@@ -84,39 +106,47 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 40),
                 AppButton(
                   label: Text(
-                    'LOG IN',
+                    'SIGN UP',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  icon: Icon(Icons.chevron_right),
+                  icon: Icon(Icons.person_add),
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) return;
                     try {
-                      await FirebaseAuthService().signIn(
+                      await FirebaseAuthService().register(
                         email: _emailController.text,
                         password: _passwordController.text,
+                        fullName: _nameController.text,
+                        phoneNumber: _phoneNumberController.text,
                       );
                       if (context.mounted) {
                         Navigator.popAndPushNamed(context, '/home');
                       }
-                    } on UserNotFoundAuthException {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('User not found. Please register.'),
-                        ),
-                      );
-                    } on WrongPasswordAuthException {
+                    } on WeakPasswordAuthException {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Incorrect password. Please try again.',
+                            'Password is too weak. Use at least 6 characters.',
                           ),
                         ),
+                      );
+                    } on EmailAlreadyExistsException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Email already registered. Try logging in.',
+                          ),
+                        ),
+                      );
+                    } on InvalidEmailAuthException {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Invalid email format.')),
                       );
                     } on GenericAuthException {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Authentication failed. Please try again.',
+                            'Registration failed. Please try again.',
                           ),
                         ),
                       );
@@ -133,13 +163,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Don\'t have an account?'),
+                    Text('Already have an account?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text(
-                        'SIGN UP',
+                        'LOG IN',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

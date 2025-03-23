@@ -1,10 +1,10 @@
+import 'package:dash_n_go/features/auth/models/auth_user.dart';
+import 'package:dash_n_go/features/auth/services/save_user_data.dart';
 import 'package:dash_n_go/services/auth/auth_service.dart';
-import 'package:dash_n_go/services/auth/auth_user.dart';
-import 'package:dash_n_go/services/database/realtime_db.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
 
-import 'auth_exceptions.dart';
+import '../exceptions/auth_exceptions.dart';
 
 class FirebaseAuthService implements AuthService {
   @override
@@ -20,7 +20,7 @@ class FirebaseAuthService implements AuthService {
       final firebaseUser = userCredential.user;
       if (firebaseUser != null) {
         final user = AuthUser.fromFirebase(firebaseUser);
-        await RealtimeDatabaseService.instance.saveUserData(user);
+        await ManageUserData.saveUserData(user);
         return user;
       } else {
         throw UserNotLoggedInAuthException();

@@ -1,4 +1,4 @@
-import 'auth_user.dart';
+import '../../features/auth/models/auth_user.dart';
 
 abstract class AuthService {
   Future<AuthUser> signIn({required String email, required String password});

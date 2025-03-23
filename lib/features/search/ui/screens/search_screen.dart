@@ -1,4 +1,4 @@
-import 'package:dash_n_go/ui/widgets/location_searching_widget.dart';
+import 'package:dash_n_go/features/search/ui/widgets/location_searching_widget.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {

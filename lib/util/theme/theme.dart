@@ -1,5 +1,6 @@
-import 'package:dash_n_go/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'colors.dart';
 
 class AppTheme {
   static final lightTheme = ThemeData(

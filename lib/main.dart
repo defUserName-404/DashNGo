@@ -1,11 +1,12 @@
-import 'package:dash_n_go/ui/screens/auth/auth_wrapper.dart';
-import 'package:dash_n_go/ui/screens/auth/login_screen.dart';
-import 'package:dash_n_go/ui/screens/auth/signup_screen.dart';
-import 'package:dash_n_go/ui/screens/home_screen.dart';
-import 'package:dash_n_go/ui/theme/theme.dart';
+import 'package:dash_n_go/features/auth/ui/auth_wrapper.dart';
+import 'package:dash_n_go/features/auth/ui/screens/login_screen.dart';
+import 'package:dash_n_go/features/auth/ui/screens/signup_screen.dart';
+import 'package:dash_n_go/features/home/ui/screens/home_screen.dart';
+import 'package:dash_n_go/util/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'features/search/ui/screens/search_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
+        '/searchScreen': (context) => SearchScreen(),
       },
     );
   }

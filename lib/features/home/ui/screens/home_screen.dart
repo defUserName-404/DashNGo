@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:dash_n_go/ui/screens/search_screen.dart';
-import 'package:dash_n_go/ui/theme/colors.dart';
+import 'package:dash_n_go/features/search/ui/screens/search_screen.dart';
+import 'package:dash_n_go/util/theme/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart'
@@ -78,17 +79,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Image.asset(
                     'assets/images/user_icon.png',
-                    height: 60,
-                    width: 60,
+                    height: 60.0,
+                    width: 60.0,
                   ),
                   SizedBox(width: 10),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'New User',
+                      Text(
+                        FirebaseAuth.instance.currentUser!.email!,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(height: 5),
                       Text(
                         'View Profile',
                         style: TextStyle(

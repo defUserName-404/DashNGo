@@ -1,5 +1,6 @@
-import 'package:dash_n_go/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../util/theme/colors.dart';
 
 class LocationSearchingWidget extends StatelessWidget {
   final String imageAssetPath;
