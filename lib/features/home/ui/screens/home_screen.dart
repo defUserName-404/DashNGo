@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dash_n_go/features/search/ui/screens/search_screen.dart';
 import 'package:dash_n_go/util/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -202,12 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SearchScreen(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/addressSearchScreen');
                       },
                       child: Container(
                         height: 50.0,

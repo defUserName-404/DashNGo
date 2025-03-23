@@ -5,11 +5,13 @@ import '../../../../util/theme/colors.dart';
 class LocationSearchingWidget extends StatelessWidget {
   final String imageAssetPath;
   final String hintText;
+  final TextEditingController? controller;
 
   const LocationSearchingWidget({
     super.key,
     required this.imageAssetPath,
     required this.hintText,
+    this.controller,
   });
 
   @override
@@ -20,6 +22,7 @@ class LocationSearchingWidget extends StatelessWidget {
         SizedBox(width: 8.0),
         Expanded(
           child: TextField(
+            controller: controller!,
             style: TextStyle(color: AppColors.colorTextDark),
             decoration: InputDecoration(
               hintText: hintText,

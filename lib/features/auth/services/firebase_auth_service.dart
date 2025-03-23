@@ -1,5 +1,5 @@
 import 'package:dash_n_go/features/auth/models/auth_user.dart';
-import 'package:dash_n_go/features/auth/services/save_user_data.dart';
+import 'package:dash_n_go/features/auth/services/manage_user_data.dart';
 import 'package:dash_n_go/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;

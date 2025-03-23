@@ -6,7 +6,7 @@ import 'package:dash_n_go/util/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'features/search/ui/screens/search_screen.dart';
+import 'features/address_search/ui/screens/address_search_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
-        '/searchScreen': (context) => SearchScreen(),
+        '/addressSearchScreen': (context) => AddressSearchScreen(),
       },
     );
   }
