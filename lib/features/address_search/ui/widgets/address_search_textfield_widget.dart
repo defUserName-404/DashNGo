@@ -22,7 +22,7 @@ class LocationSearchingWidget extends StatelessWidget {
         SizedBox(width: 8.0),
         Expanded(
           child: TextField(
-            controller: controller!,
+            controller: controller,
             style: TextStyle(color: AppColors.colorTextDark),
             decoration: InputDecoration(
               hintText: hintText,

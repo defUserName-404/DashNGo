@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dash_n_go/features/address_search/controllers/address_search_controller.dart';
 import 'package:dash_n_go/util/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart'
     show Geolocator, LocationAccuracy, LocationSettings, Position;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -236,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(width: 5.0),
                               Text(
-                                'Search Destination',
+                                'Search for Location',
                                 style: TextStyle(
                                   color: AppColors.colorTextSemiLight,
                                 ),
@@ -254,9 +256,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Add Pickup Location',
-                              style: TextStyle(fontSize: 13),
+                            Consumer<AddressSearchController>(
+                              builder: (
+                                BuildContext context,
+                                AddressSearchController value,
+                                Widget? child,
+                              ) {
+                                if (value.pickupAddress == null ||
+                                    value.pickupAddress!.placeName.isEmpty) {
+                                  return Text(
+                                    'Add Pickup Location',
+                                    style: TextStyle(fontSize: 13),
+                                  );
+                                }
+                                return Text(
+                                  value.pickupAddress!.placeName,
+                                  style: TextStyle(fontSize: 13),
+                                );
+                              },
                             ),
                             Text(
                               'Your pickup location',
@@ -274,9 +291,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Add Destination Location',
-                              style: TextStyle(fontSize: 13),
+                            Consumer<AddressSearchController>(
+                              builder: (
+                                BuildContext context,
+                                AddressSearchController value,
+                                Widget? child,
+                              ) {
+                                if (value.destinationAddress == null ||
+                                    value
+                                        .destinationAddress!
+                                        .placeName
+                                        .isEmpty) {
+                                  return Text(
+                                    'Add Destination Location',
+                                    style: TextStyle(fontSize: 13),
+                                  );
+                                }
+                                return Text(
+                                  value.destinationAddress!.placeName,
+                                  style: TextStyle(fontSize: 13),
+                                );
+                              },
                             ),
                             Text(
                               'Your destination location',

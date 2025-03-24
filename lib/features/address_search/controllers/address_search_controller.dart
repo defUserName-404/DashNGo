@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../models/address.dart';
-import '../services/address_search_service.dart';
 
 class AddressSearchController extends ChangeNotifier {
-  final AddressSearchService addressSearchService;
+  Address? _pickupAddress;
+  Address? _destinationAddress;
 
-  AddressSearchController({required this.addressSearchService});
+  Address? get pickupAddress => _pickupAddress;
+  Address? get destinationAddress => _destinationAddress;
 
   void updatePickupAddress(Address pickupAddress) {
-    addressSearchService.updatePickupAddress(pickupAddress);
+    _pickupAddress = pickupAddress;
     notifyListeners();
   }
 
   void updateDestinationAddress(Address destinationAddress) {
-    addressSearchService.updateDestinationAddress(destinationAddress);
+    _destinationAddress = destinationAddress;
     notifyListeners();
   }
 }
